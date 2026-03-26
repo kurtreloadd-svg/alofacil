@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>A lo Fácil – Fiambres</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF4E8;
+    --warm: #F2E6CC;
+    --red: #C0392B;
+    --red-dark: #96281B;
+    --red-light: #FDECEA;
+    --gold: #D4A843;
+    --gold-light: #FDF3DC;
+    --brown: #5C3317;
+    --text: #2C1810;
+    --light-text: #7A5C4A;
+    --white: #ffffff;
+    --shadow-sm: 0 2px 8px rgba(92,51,23,0.08);
+    --shadow-md: 0 4px 16px rgba(92,51,23,0.12);
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    overscroll-behavior-y: contain;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(160deg, var(--red) 0%, var(--red-dark) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -40px;
+    width: 220px; height: 220px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 10%;
+    width: 180px; height: 180px;
+    background: var(--gold);
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+
+  .header-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: calc(env(safe-area-inset-top, 0px) + 28px) 20px 28px;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--gold);
+    color: var(--brown);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 10vw, 48px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.0;
+    letter-spacing: -1px;
+  }
+
+  .header-sub {
+    color: rgba(255,255,255,0.70);
+    font-size: 13px;
+    margin-top: 8px;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+  }
+
+  /* PROMO BANNER */
+  .promo-banner {
+    background: var(--gold);
+    text-align: center;
+    padding: 11px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--brown);
+  }
+
+  /* NAV TABS */
+  .nav-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--cream);
+    border-bottom: 1px solid var(--warm);
+    padding: 0 16px;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+
+  .nav-tab {
+    flex-shrink: 0;
+    padding: 13px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--light-text);
+    cursor: pointer;
+    border-bottom: 2.5px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+
+  .nav-tab.active {
+    color: var(--red);
+    border-bottom-color: var(--red);
+    font-weight: 600;
+  }
+
+  /* MAIN */
+  main {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 20px 14px 140px;
+  }
+
+  .section {
+    margin-bottom: 32px;
+    scroll-margin-top: 52px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+    color: var(--brown);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--warm);
+  }
+
+  /* PRODUCT CARDS */
+  .product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .product-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: 52px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+    border: 2px solid transparent;
+    animation: fadeSlideIn 0.3s ease both;
+  }
+
+  .product-card.in-cart {
+    border-color: var(--red);
+    background: var(--red-light);
+    box-shadow: var(--shadow-md);
+  }
+
+  .product-emoji {
+    font-size: 28px;
+    width: 52px; height: 52px;
+    background: var(--warm);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .product-info { min-width: 0; }
+
+  .product-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
+  }
+
+  .product-unit {
+    font-size: 12px;
+    color: var(--light-text);
+    margin-bottom: 1px;
+  }
+
+  .product-horma {
+    font-size: 11px;
+    color: #1a6fa8;
+    font-weight: 500;
+  }
+
+  .product-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .product-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--red);
+    white-space: nowrap;
+  }
+
+  .qty-control {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .qty-btn {
+    width: 32px; height: 32px;
+    border-radius: 10px;
+    border: none;
+    background: var(--red);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.12s, transform 0.1s;
+    flex-shrink: 0;
+  }
+
+  .qty-btn:active { transform: scale(0.88); background: var(--red-dark); }
+
+  .qty-btn.minus {
+    background: transparent;
+    border: 1.5px solid var(--red);
+    color: var(--red);
+  }
+  .qty-btn.minus:active { background: var(--red-light); }
+
+  .qty-num {
+    font-weight: 700;
+    font-size: 16px;
+    min-width: 22px;
+    text-align: center;
+  }
+
+  /* COMBOS */
+  .combo-card {
+    background: linear-gradient(135deg, #4a2510 0%, var(--brown) 50%, #7a4520 100%);
+    border-radius: var(--radius);
+    padding: 18px 18px 16px;
+    color: #fff;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    box-shadow: var(--shadow-md);
+    animation: fadeSlideIn 0.3s ease both;
+  }
+
+  .combo-card::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 100px; height: 100px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+
+  .combo-card.in-cart {
+    border-color: var(--gold);
+    box-shadow: 0 4px 20px rgba(212,168,67,0.3);
+  }
+
+  .combo-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--brown);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+
+  .combo-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .combo-desc {
+    font-size: 12px;
+    opacity: 0.75;
+    margin-bottom: 12px;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  .combo-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .combo-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .combo-add-btn {
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.35);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    white-space: nowrap;
+  }
+
+  .combo-add-btn:active { transform: scale(0.95); }
+  .combo-add-btn.added { background: var(--gold); border-color: var(--gold); color: var(--brown); }
+
+  /* QR SECTION */
+  .qr-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border: 2px dashed var(--warm);
+  }
+
+  .qr-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    color: var(--brown);
+    margin-bottom: 6px;
+  }
+
+  .qr-card-sub {
+    font-size: 12px;
+    color: var(--light-text);
+    margin-bottom: 20px;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  #qrContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
+  #qrContainer canvas,
+  #qrContainer img {
+    border-radius: 12px;
+    border: 5px solid var(--warm);
+    display: block;
+  }
+
+  .qr-url-display {
+    font-size: 11px;
+    color: var(--light-text);
+    word-break: break-all;
+    background: var(--cream);
+    padding: 7px 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-family: monospace;
+  }
+
+  .qr-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-brown {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--brown);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .btn-brown:active { transform: scale(0.96); background: #3d2008; }
+
+  .btn-warm {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--warm);
+    color: var(--brown);
+    border: none;
+    border-radius: 12px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-warm:active { background: #e8d5b0; }
+
+  /* INFO SECTION */
+  .info-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .info-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .info-icon {
+    width: 42px; height: 42px;
+    background: var(--gold-light);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .info-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--light-text);
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .info-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* CART BAR */
+  .cart-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 10px 14px;
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 14px);
+    background: linear-gradient(to top, var(--cream) 75%, transparent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transform: translateY(120px);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .cart-bar.visible { transform: translateY(0); }
+
+  .cart-summary {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--light-text);
+    box-shadow: var(--shadow-sm);
+    max-width: 452px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .cart-summary strong { color: var(--text); }
+
+  .whatsapp-btn {
+    background: #25D366;
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 17px 28px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 452px;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .whatsapp-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 10px rgba(37,211,102,0.3);
+  }
+
+  .whatsapp-icon { width: 22px; height: 22px; fill: #fff; }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: var(--white);
+    border-radius: 24px 24px 0 0;
+    padding: 24px 20px;
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+    width: 100%;
+    max-width: 480px;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+  }
+
+  .modal-overlay.open .modal { transform: translateY(0); }
+
+  .modal-handle {
+    width: 36px; height: 4px;
+    background: var(--warm);
+    border-radius: 2px;
+    margin: 0 auto 20px;
+  }
+
+  .modal h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--brown);
+    margin-bottom: 6px;
+  }
+
+  .modal p { font-size: 13px; color: var(--light-text); margin-bottom: 16px; line-height: 1.5; }
+
+  .modal input {
+    width: 100%;
+    border: 2px solid var(--warm);
+    border-radius: 12px;
+    padding: 13px 14px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--cream);
+    outline: none;
+    transition: border-color 0.15s;
+    margin-bottom: 14px;
+  }
+
+  .modal input:focus { border-color: var(--red); }
+
+  .modal-save-btn {
+    width: 100%;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 15px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+  }
+  .modal-save-btn:active { background: var(--red-dark); }
+
+  /* ANIMATIONS */
+  @keyframes pop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.07); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: pop 0.22s ease; }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* FOOTER */
+  footer {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 16px 16px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--light-text);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="badge">🧀 Fiambrería</div>
+    <h1>A lo Fácil</h1>
+    <p class="header-sub">Productos frescos · Pedidos por WhatsApp</p>
+  </div>
+</header>
+
+<div class="promo-banner">
+  🎉 Pedidos de lunes a sábado — Consultá disponibilidad y envío
+</div>
+
+<nav class="nav-tabs">
+  <div class="nav-tab active" onclick="scrollToSection('productos', this)">🥩 Fiambres</div>
+  <div class="nav-tab" onclick="scrollToSection('milanesas', this)">🍗 Milanesas</div>
+  <div class="nav-tab" onclick="scrollToSection('combos', this)">✨ Combos</div>
+  <div class="nav-tab" onclick="scrollToSection('qr', this)">📱 QR</div>
+  <div class="nav-tab" onclick="scrollToSection('info', this)">📍 Info</div>
+</nav>
+
+<main>
+
+  <div class="section" id="productos">
+    <h2 class="section-title">Nuestros Productos</h2>
+    <div class="product-list" id="productList"></div>
+  </div>
+
+  <div class="section" id="milanesas">
+    <h2 class="section-title">Milanesas</h2>
+    <div class="product-list" id="milanesaList"></div>
+  </div>
+
+  <div class="section" id="combos">
+    <h2 class="section-title">Combos Especiales</h2>
+    <div id="comboList"></div>
+  </div>
+
+  <div class="section" id="qr">
+    <h2 class="section-title">QR del Local</h2>
+    <div class="qr-card">
+      <p class="qr-card-title">¡Compartí tu catálogo!</p>
+      <p class="qr-card-sub">Mostrá este código en el local o imprimilo para que tus clientes hagan pedidos desde el celular.</p>
+      <div id="qrContainer"></div>
+      <div class="qr-url-display" id="qrUrlDisplay"></div>
+      <div class="qr-actions">
+        <button class="btn-brown" onclick="downloadQR()">⬇️ Descargar QR</button>
+        <button class="btn-warm" onclick="openUrlModal()">✏️ Cambiar URL</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="info">
+    <h2 class="section-title">Información del Local</h2>
+    <div class="info-card">
+      <div class="info-row">
+        <div class="info-icon">⏰</div>
+        <div>
+          <div class="info-label">Horario</div>
+          <div class="info-value">Lunes a Sábado · 8:00–13:00 / 17:00–21:00</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">📞</div>
+        <div>
+          <div class="info-label">WhatsApp</div>
+          <div class="info-value">+54 2934 46-3759</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">🚚</div>
+        <div>
+          <div class="info-label">Envíos</div>
+          <div class="info-value">Consultá disponibilidad por zona</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">💳</div>
+        <div>
+          <div class="info-label">Medios de pago</div>
+          <div class="info-value">Efectivo · Transferencia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="cart-bar" id="cartBar">
+  <div class="cart-summary" id="cartSummary"></div>
+  <button class="whatsapp-btn" onclick="sendWhatsApp()">
+    <svg class="whatsapp-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Hacer pedido por WhatsApp
+  </button>
+</div>
+
+<!-- URL Modal -->
+<div class="modal-overlay" id="urlModal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h3>URL del catálogo</h3>
+    <p>Ingresá la URL donde vas a publicar esta página en Netlify. El QR se va a actualizar automáticamente y lo podés descargar para imprimir.</p>
+    <input type="url" id="urlInput" placeholder="https://tu-sitio.netlify.app" />
+    <button class="modal-save-btn" onclick="saveUrl()">Guardar y generar QR</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+const WHATSAPP = "542934463759";
+const HORMA_KG = 3.5;
+const DEFAULT_URL = "https://tu-catalogo.netlify.app";
+
+const products = [
+  { id:1, name:"Queso Cremoso",       price:7900,  emoji:"🧀", cat:"fiambres" },
+  { id:2, name:"Paleta Cocida",       price:8200,  emoji:"🥩", cat:"fiambres" },
+  { id:3, name:"Jamón Cocido",        price:11500, emoji:"🍖", cat:"fiambres" },
+  { id:4, name:"Queso Barra",         price:11500, emoji:"🧀", cat:"fiambres" },
+  { id:5, name:"Muzzarella",          price:11500, emoji:"🫕", cat:"fiambres" },
+  { id:6, name:"Queso Sardo Rallado", price:14900, emoji:"🧂", cat:"fiambres" },
+  { id:7, name:"Milanesa de Pollo (pechuga)", price:10900, emoji:"🍗", cat:"milanesas" },
+  { id:8, name:"Milanesa de Nalga",           price:23900, emoji:"🥩", cat:"milanesas" },
+  { id:9, name:"Milanesa de Cuadril",         price:23900, emoji:"🥩", cat:"milanesas" },
+  { id:10,name:"Milanesa de Bola de Lomo",    price:22900, emoji:"🥩", cat:"milanesas" },
+  { id:11,name:"Milanesa de Cuadrada",        price:21900, emoji:"🥩", cat:"milanesas" },
+];
+
+const combos = [
+  { id:"c1", name:"Queso Barra + Jamón",              desc:"1kg de Queso Barra + 1kg de Jamón Cocido",                            emoji:"🧀🍖", price:29500 },
+  { id:"c2", name:"Paleta + Queso Barra",             desc:"1kg de Paleta Cocida + 1kg de Queso Barra",                          emoji:"🥩🧀", price:25900 },
+  { id:"c3", name:"Paleta Sandwichera + Queso Barra", desc:"1kg de Paleta Sandwichera + 1kg de Queso Barra",                     emoji:"🥪🧀", price:21900 },
+  { id:"c4", name:"Cremoso + Paleta Sandwichera",     desc:"1kg de Queso Cremoso + 500g de Paleta Sandwichera",                  emoji:"🧀🥪", price:13900 },
+  { id:"c5", name:"Cremoso + Paleta Cocida",          desc:"1kg de Queso Cremoso + 500g de Paleta Cocida",                       emoji:"🧀🥩", price:16900 },
+  { id:"c6", name:"Cremoso + Jamón Cocido",           desc:"1kg de Queso Cremoso + 500g de Jamón Cocido",                       emoji:"🧀🍖", price:18900 },
+  { id:"c7", name:"Picada en Trozo x4 personas",      desc:"Salame + Jamón + Queso Pategras + Mortadela + Aceitunas (1kg total)",emoji:"🫒🍷", price:22900 },
+];
+
+const cart = {};
+const cartCombos = {};
+
+function fmt(n) { return "$" + n.toLocaleString("es-AR"); }
+
+function productCardHTML(p, i) {
+  const hormaPrice = Math.round(p.price * HORMA_KG);
+  const showHorma = p.cat === 'fiambres';
+  return `
+  <div class="product-card ${cart[p.id] ? 'in-cart' : ''}" id="card-${p.id}" style="animation-delay:${i*0.06}s">
+    <div class="product-emoji">${p.emoji}</div>
+    <div class="product-info">
+      <div class="product-name">${p.name}</div>
+      <div class="product-unit">🏷️ <strong>${fmt(p.price)}</strong> / kg</div>
+      ${showHorma ? `<div class="product-horma">🔵 Horma (~3,5 kg): <strong>${fmt(hormaPrice)}</strong></div>` : ''}
+    </div>
+    <div class="product-right">
+      <div class="product-price">${fmt(p.price)}<span style="font-size:10px;font-family:'DM Sans';font-weight:400">/kg</span></div>
+      <div class="qty-control">
+        <button class="qty-btn minus" onclick="changeQty(${p.id},-1)">−</button>
+        <span class="qty-num" id="qty-${p.id}">${cart[p.id]||0}</span>
+        <button class="qty-btn" onclick="changeQty(${p.id},1)">+</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderProducts() {
+  const fiambres = products.filter(p => p.cat === 'fiambres');
+  const milanesas = products.filter(p => p.cat === 'milanesas');
+  document.getElementById("productList").innerHTML = fiambres.map((p,i) => productCardHTML(p,i)).join("");
+  document.getElementById("milanesaList").innerHTML = milanesas.map((p,i) => productCardHTML(p,i)).join("");
+}
+
+function renderCombos() {
+  document.getElementById("comboList").innerHTML = combos.map((c, i) => `
+    <div class="combo-card ${cartCombos[c.id] ? 'in-cart' : ''}" id="combo-${c.id}" style="animation-delay:${i*0.06}s">
+      <div class="combo-tag">✨ Combo especial</div>
+      <div class="combo-name">${c.emoji} ${c.name}</div>
+      <div class="combo-desc">${c.desc}</div>
+      <div class="combo-footer">
+        <div class="combo-price">${fmt(c.price)}</div>
+        <button class="combo-add-btn ${cartCombos[c.id]?'added':''}" onclick="toggleCombo('${c.id}')">
+          ${cartCombos[c.id] ? '✓ Agregado' : 'Agregar'}
+        </button>
+      </div>
+    </div>`).join("");
+}
+
+function changeQty(id, delta) {
+  const cur = cart[id] || 0;
+  const next = Math.max(0, cur + delta);
+  if (next === 0) delete cart[id]; else cart[id] = next;
+  const card = document.getElementById(`card-${id}`);
+  card.classList.toggle("in-cart", !!cart[id]);
+  card.classList.add("pop");
+  setTimeout(() => card.classList.remove("pop"), 280);
+  document.getElementById(`qty-${id}`).textContent = next;
+  updateCartBar();
+}
+
+function toggleCombo(cid) {
+  cartCombos[cid] = !cartCombos[cid];
+  renderCombos();
+  updateCartBar();
+}
+
+function totalItems() {
+  return Object.values(cart).reduce((a,b)=>a+b,0)
+       + Object.values(cartCombos).filter(Boolean).length;
+}
+
+function totalPrice() {
+  let total = 0;
+  for (const [id, qty] of Object.entries(cart)) {
+    const p = products.find(x => x.id == id);
+    if (p) total += Math.round(p.price * HORMA_KG) * qty;
+  }
+  for (const [cid, active] of Object.entries(cartCombos)) {
+    if (active) { const c = combos.find(x => x.id === cid); if (c) total += c.price; }
+  }
+  return total;
+}
+
+function updateCartBar() {
+  const bar = document.getElementById("cartBar");
+  const n = totalItems();
+  if (n === 0) { bar.classList.remove("visible"); return; }
+  bar.classList.add("visible");
+  document.getElementById("cartSummary").innerHTML =
+    `<strong>${n} ${n===1?'producto':'productos'}</strong> seleccionados — Total estimado: <strong>${fmt(totalPrice())}</strong>`;
+}
+
+function sendWhatsApp() {
+  let lines = ["🛒 *Hola! Quiero hacer un pedido de A lo Fácil:*\n"];
+  for (const [id, qty] of Object.entries(cart)) {
+    const p = products.find(x => x.id == id);
+    if (p) lines.push(`• ${qty} horma(s) de ${p.name} (~${HORMA_KG*qty}kg) — ${fmt(Math.round(p.price*HORMA_KG)*qty)}`);
+  }
+  for (const [cid, active] of Object.entries(cartCombos)) {
+    if (active) { const c = combos.find(x => x.id===cid); if (c) lines.push(`• *${c.name}* — ${fmt(c.price)}`); }
+  }
+  lines.push(`\n💰 *Total estimado: ${fmt(totalPrice())}*`);
+  lines.push("\n¿Me podés confirmar disponibilidad y si tienen envío? 🙌");
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
+}
+
+function scrollToSection(id, tab) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── QR ──
+let currentUrl = localStorage.getItem('catalogoUrl') || DEFAULT_URL;
+let qrObj = null;
+
+function generateQR(url) {
+  document.getElementById('qrUrlDisplay').textContent = url;
+  const container = document.getElementById('qrContainer');
+  container.innerHTML = '';
+  try {
+    qrObj = new QRCode(container, {
+      text: url,
+      width: 200,
+      height: 200,
+      colorDark: "#2C1810",
+      colorLight: "#FAF4E8",
+      correctLevel: QRCode.CorrectLevel.M
+    });
+    // style the generated element
+    setTimeout(() => {
+      const el = container.querySelector('canvas') || container.querySelector('img');
+      if (el) { el.style.borderRadius = '12px'; el.style.border = '5px solid #F2E6CC'; }
+    }, 150);
+  } catch(e) {
+    container.innerHTML = '<p style="color:var(--light-text);font-size:12px;padding:20px">Cargando QR...</p>';
+  }
+}
+
+function downloadQR() {
+  const canvas = document.querySelector('#qrContainer canvas');
+  const img = document.querySelector('#qrContainer img');
+  const link = document.createElement('a');
+  link.download = 'qr-aloFacil.png';
+  if (canvas) link.href = canvas.toDataURL('image/png');
+  else if (img) link.href = img.src;
+  else return;
+  link.click();
+}
+
+function openUrlModal() {
+  document.getElementById('urlInput').value = currentUrl;
+  document.getElementById('urlModal').classList.add('open');
+}
+
+function closeModalOutside(e) {
+  if (e.target.id === 'urlModal') document.getElementById('urlModal').classList.remove('open');
+}
+
+function saveUrl() {
+  const val = document.getElementById('urlInput').value.trim();
+  if (!val) return;
+  currentUrl = val;
+  localStorage.setItem('catalogoUrl', val);
+  generateQR(val);
+  document.getElementById('urlModal').classList.remove('open');
+}
+
+// Init
+renderProducts();
+renderCombos();
+window.addEventListener('load', () => setTimeout(() => generateQR(currentUrl), 400));
+</script>
+</body>
+</html>
